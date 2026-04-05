@@ -3,6 +3,8 @@ The Odin Projcect JavaScript Course
 
 ## [Assignment][https://www.theodinproject.com/lessons/node-path-javascript-todo-list#assignment] 
 
+![Architecture](image.png)
+
 1. ‘todos’ are **objects** that should be dynamically created using factories or constructors/classes.
 2.  **todo properties:**
         - title;
