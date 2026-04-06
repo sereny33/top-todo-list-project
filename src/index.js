@@ -2,9 +2,11 @@ import "./styles.css";
 
 import { TodoManager } from "./modules/models/todoManager";
 import { Storage } from "./modules/storage";
+import { UI } from "./modules/ui/ui";
 
 const manager = new TodoManager();
 const storage = new Storage();
+const ui = new UI();
 
 
 // // 1. Очищаем старые поломанные данные
@@ -89,4 +91,16 @@ if (savedProjects && savedProjects.length > 0) {
 }
 
 console.log(manager.projects);
+manager.setCurrentProject('Работа')
 
+ui.render(manager.getCurrentProject())
+
+manager.getCurrentProject().addTodo(
+  401,
+  "Стоматолог",
+  "Плановый осмотр в 15:00",
+  "2026-04-20",
+  "high",
+)
+
+ui.render(manager.getCurrentProject())
