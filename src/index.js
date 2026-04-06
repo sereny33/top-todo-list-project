@@ -1,55 +1,92 @@
 import "./styles.css";
 
-import { Project } from "./modules/models/project";
 import { TodoManager } from "./modules/models/todoManager";
+import { Storage } from "./modules/storage";
 
-const projectSerega1 = new Project('serega1')
-const projectSerega2 = new Project('serega2')
-const projectSerega3 = new Project('serega3')
+const manager = new TodoManager();
+const storage = new Storage();
 
-projectSerega1.addTodo(1,    
-    'Спортзал', 
-    'Тренировка ног и кардио 30 минут.', 
-    '2026-04-16', 
-    'low')
-projectSerega1.addTodo(2,    
-    'Позвонить родителям', 
-    'Узнать как дела и договориться о встрече на выходных.', 
-    '2026-04-14', 
-    'high')
-projectSerega2.addTodo(3,    
-    'Проект на JS', 
-    'Реализовать удаление задач и сохранение в LocalStorage.', 
-    '2026-04-20', 
-    'medium')
-projectSerega2.addTodo(4, 
-    'Купить продукты', 
-    'Взять молоко, хлеб, сыр и овощи для салата на ужин.', 
-    '2026-04-15', 
-    'high')
-projectSerega3.addTodo(4, 
-    'Купить продукты', 
-    'Взять молоко, хлеб, сыр и овощи для салата на ужин.', 
-    '2026-04-15', 
-    'high')
-projectSerega3.addTodo(4, 
-    'Купить продукты', 
-    'Взять молоко, хлеб, сыр и овощи для салата на ужин.', 
-    '2026-04-15', 
-    'high')
 
-const manager = new TodoManager()
+// // 1. Очищаем старые поломанные данные
+// localStorage.clear();
 
-manager.createProject(projectSerega1)
-manager.createProject(projectSerega2)
-manager.createProject(projectSerega3)
+// // 2. Создаем 5 проектов с задачами
+// manager.createProject("Работа");
+// manager.setCurrentProject("Работа");
+// let work = manager.getCurrentProject();
+// work.addTodo(
+//   101,
+//   "Отчет",
+//   "Подготовить квартальный отчет",
+//   "2026-04-10",
+//   "high",
+// );
+// work.addTodo(
+//   102,
+//   "Митинг",
+//   "Встреча с командой по дизайну",
+//   "2026-04-11",
+//   "low",
+// );
+
+// manager.createProject("Дом");
+// manager.setCurrentProject("Дом");
+// let home = manager.getCurrentProject();
+// home.addTodo(
+//   201,
+//   "Уборка",
+//   "Помыть окна и пропылесосить",
+//   "2026-04-12",
+//   "medium",
+// );
+
+// manager.createProject("Учеба");
+// manager.setCurrentProject("Учеба");
+// let study = manager.getCurrentProject();
+// study.addTodo(
+//   301,
+//   "Курс JS",
+//   "Закончить модуль про LocalStorage",
+//   "2026-04-07",
+//   "high",
+// );
+
+// manager.createProject("Здоровье");
+// manager.setCurrentProject("Здоровье");
+// let health = manager.getCurrentProject();
+// health.addTodo(
+//   401,
+//   "Стоматолог",
+//   "Плановый осмотр в 15:00",
+//   "2026-04-20",
+//   "high",
+// );
+
+// manager.createProject("Хобби");
+// manager.setCurrentProject("Хобби");
+// let hobby = manager.getCurrentProject();
+// hobby.addTodo(
+//   501,
+//   "Гитара",
+//   "Выучить соло из Stairway to Heaven",
+//   "2026-05-01",
+//   "low",
+// );
+
+// // 3. Сохраняем все в Storage
+// storage.saveProjects(manager.projects);
+
+// console.log("Тестовые данные созданы и сохранены!");
+
+
+const savedProjects = storage.loadProjects();
+
+if (savedProjects && savedProjects.length > 0) {
+  manager.reviveData(savedProjects);
+} else {
+  manager.createProject("Starter Project");
+  manager.setCurrentProject("Starter Project");
+}
 
 console.log(manager.projects);
 
-manager.deleteProject('serega2');
-console.log(manager.projects);
-
-manager.setCurrentProject('serega1')
-
-const currentProj = manager.getCurrentProject()
-currentProj.getTodos()

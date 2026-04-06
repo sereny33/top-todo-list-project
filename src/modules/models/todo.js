@@ -1,4 +1,4 @@
-import { format } from "date-fns"
+import { format, parseISO, isValid } from "date-fns"
 
 /**
  *  1. ‘todos’ are **objects** that should be dynamically created using factories or constructors/classes.
@@ -29,9 +29,18 @@ export class Todo {
         this.id = id
         this.title = title;
         this.description = description;
-        this.dueDate = format(dueDate, "dd/MM/yyyy" );
         this.priority = priority
         this.createdDate = new Date;
+        
+        const dateObj = typeof dueDate === 'string' ? parseISO(dueDate) : dueDate;
+
+        // 2. Проверяем, валидна ли дата, прежде чем форматировать
+        if (isValid(dateObj)) {
+            this.dueDate = format(dateObj, "dd/MM/yyyy");
+        } else {
+            this.dueDate = "No date"; // Запасной вариант, чтобы код не падал
+        }
+
     }
 
     toggleComplete() {
