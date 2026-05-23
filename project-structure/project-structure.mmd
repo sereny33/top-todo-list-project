@@ -1,0 +1,78 @@
+classDiagram
+    AppPresenter --> ProjectManager : uses
+    AppPresenter --> ProjectView : updates/binds
+    AppPresenter --> TodoView : updates/binds
+    AppPresenter --> Storage : persists
+
+    ProjectManager o-- "*" Project : manages
+    Project "1" o-- "*" Todo : contains
+
+    class AppPresenter {
+        +init()
+        +render()
+        +persist()
+        +handleOpenProjectDialog()
+        +handleSaveProject(name)
+        +handleDeleteProject()
+        +handleProjectSelect(projectId)
+        +handleSaveTodo(todoData)
+        +handleToggleTodo(todoId)
+        +handleDeleteTodo(todoId)
+    }
+
+    class ProjectManager {
+        +projects
+        +currentProjectId
+        +createProject(name)
+        +getProjectById(projectId)
+        +deleteProject(projectId)
+        +setCurrentProject(projectId)
+        +getCurrentProject()
+        +loadFromJSON(state)
+        +toJSON()
+    }
+
+    class ProjectView {
+        +render(projects, activeProjectId)
+        +openProjectDialog()
+        +closeProjectDialog()
+        +bindAddProject(handler)
+        +bindSaveProject(handler)
+        +bindProjectSelect(handler)
+    }
+
+    class TodoView {
+        +renderTodos(project)
+        +bindAddTodo(handler)
+        +bindDeleteProject(handler)
+        +bindTodoActions({onToggle, onDelete})
+    }
+
+    class Storage {
+        +save(state)
+        +load()
+        +clear()
+    }
+
+    class Project {
+        +id
+        +name
+        +todoList
+        +addTodo(todoData)
+        +deleteTodo(todoId)
+        +toggleTodo(todoId)
+        +toJSON()
+    }
+
+    class Todo {
+        +id
+        +title
+        +description
+        +dueDate
+        +priority
+        +completed
+        +createdDate
+        +toggleComplete()
+        +update(data)
+        +toJSON()
+    }

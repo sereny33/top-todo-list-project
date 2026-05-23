@@ -1,41 +1,75 @@
-# Project: Todo List
-The Odin Projcect JavaScript Course
+# Top Todo List
 
-## [Assignment][https://www.theodinproject.com/lessons/node-path-javascript-todo-list#assignment] 
+A vanilla JavaScript Todo app built with MVP architecture and localStorage.
 
-![Architecture](image.png)
+## Project Overview
 
-1. ‘todos’ are **objects** that should be dynamically created using factories or constructors/classes.
-2.  **todo properties:**
-        - title;
-        - description;
-        - dueDate;
-        - priority;
-        - notes (optional);
-        - checklist (optional);
-        - picture (optional);
-        - color picker(optional);
-3. Your todo list should have **projects** or **separate lists** of todos. When a user first opens the app, there should be some sort of ‘default’ project to which all of their todos are put. Users should be able to create new projects and choose which project their todos go into.
-4. You should separate your application logic (i.e. creating new todos, setting todos as complete, changing todo priority etc.) from the DOM-related stuff, so keep all of those things in separate modules.
-5. The look of the User Interface is up to you, but it should be able to do the following:
-    - View all projects.
-    - View all todos in each project (probably just the title and duedate… perhaps changing color for different priorities).
-    - Expand a single todo to see/edit its details.
-    - Delete a todo.
-6. For inspiration, check out the following great todo apps. (look at screenshots, watch their introduction videos etc.)
-    - [Todoist][https://en.todoist.com/]
-    - [Things][https://culturedcode.com/things/]
-    - [any.do][https://www.any.do/]
-7. Since you are probably already using webpack, adding external libraries from npm is a cinch! You might want to consider using the following useful library in your code:
-    - **date-fns** gives you a bunch of handy functions for formatting and manipulating dates and times.
-8. We haven’t learned any techniques for actually storing our data anywhere, so when the user refreshes the page, all of their todos will disappear! You should add some persistence to this todo app using the Web Storage API.
-**localStorage** allows you to save data on the user’s computer. The downside here is that the data is ONLY accessible on the computer that it was created on. Even so, it’s pretty handy! Set up a function that saves the projects (and todos) to localStorage every time a new project (or todo) is created, and another function that looks for that data in localStorage when your app is first loaded. Additionally, here are a couple of quick tips to help you not get tripped up:
+This app organizes work into named **projects**, each containing a list of **todos**. The UI is separated from application logic using a Model-View-Presenter pattern.
 
-    - Make sure your app doesn’t crash if the data you may want to retrieve from localStorage isn’t there!
-    - You can inspect data you saved in localStorage using DevTools! To do this, open the Application tab in DevTools and click on the Local Storage tab under Storage. Every time you add, update and delete data from localStorage in your app, those changes will be reflected in DevTools.
-    - localStorage uses JSON to send and store data, and when you retrieve the data, it will also be in JSON format. Keep in mind you cannot store functions in JSON, so you’ll have to figure out how to add methods back to your object properties once you fetch them. Good luck!
+- `src/index.js` bootstraps the app and wires model, view, presenter, and storage.
+- `src/modules/models` contains project and todo data classes.
+- `src/modules/view` contains DOM rendering and user interaction logic.
+- `src/modules/presenter.js` handles state coordination, event binding, and persistence.
+- `src/modules/storage.js` provides localStorage persistence for project/todo state.
 
+## Architecture
 
-## Planning
+The app follows MVP:
+
+- `AppPresenter` connects views and model state.
+- `ProjectManager` maintains the list of projects and current selection.
+- `ProjectView` renders project sidebar, selection, and create-dialog flow.
+- `TodoView` renders todo cards, empty-state messages, and form dialogs.
+- `Storage` saves and loads JSON state from localStorage.
+
+## UML Diagram
+
+A separate Mermaid diagram and visualization is available in `project-structure/`.
+
+## Project Structure
+
+```text
+.
+├── index.html
+├── package.json
+├── webpack.config.js
+├── babel.config.json
+├── postcss.config.js
+├── src
+│   ├── index.js
+│   ├── styles.css
+│   ├── lib/
+│   └── modules/
+│       ├── storage.js
+│       ├── presenter.js
+│       ├── models/
+│       │   ├── project.js
+│       │   ├── todo.js
+│       │   └── todoManager.js
+│       └── view/
+│           ├── projectView.js
+│           └── todoView.js
+```
+
+## Dependencies
+
+- `date-fns` for date parsing and formatting.
+- `webpack`, `webpack-cli`, and `webpack-dev-server` for bundling and local development.
+- `babel-loader` and `@babel/preset-env` for JavaScript transpilation.
+- `css-loader`, `style-loader`, `postcss-loader`, `autoprefixer`, and `mini-css-extract-plugin` for CSS bundling.
+- `html-webpack-plugin` for HTML templating.
+
+## Run the App
+
+```bash
+npm install
+npm run build:dev
+npm run serve
+```
+
+## Notes
+
+- The app uses localStorage so projects and todos persist after refresh.
+- Empty startup state is supported: create a project to begin adding todos.
 
 
