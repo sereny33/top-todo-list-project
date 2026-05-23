@@ -1,31 +1,138 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Webpack App</title>
-    </head>
-    <body>
-        <header>
-            <h1>Hello world!</h1>
-            <h2>Tip: Check your console</h2>
-        </header>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Top Todo List</title>
+  </head>
+  <body>
+    <div class="app">
+      <header class="app__header">
+        <div>
+          <p class="app__label">Task manager</p>
+          <h1>TOP Todo List</h1>
+        </div>
+        <p class="app__subtitle">Organize projects, add todos, and keep your day on track.</p>
+      </header>
 
-        <main>
-            <div id="container" class="container"></div>
-        </main>
+      <main class="app__main">
+        <aside class="app__sidebar">
+          <div class="sidebar__panel">
+            <div class="sidebar__header">
+              <h2>Projects</h2>
+              <button id="addProject" type="button" class="button button--secondary">New</button>
+            </div>
+            <ul id="projects-list" class="projects__list"></ul>
+          </div>
+        </aside>
 
-        <footer></footer>
-            <template id="card-template">
-        <article class="card">
-            <h2 class="title">123</h2>
-            <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, eligendi!</p>
-            <div class="dueDate"></div>
-            <div class="created"></div>
-            <label for="completed">Completed</label>
-            <input type="checkbox" name="completed" id="completed">
-        </article>
-        </template>       
-    </body>
+        <section class="app__content">
+          <div class="content__header">
+            <div>
+              <p class="content__label">Current project</p>
+              <h2 id="current-project-title">No project selected</h2>
+            </div>
+            <div class="content__header-actions">
+              <button id="addTodo" type="button" class="button button--primary" disabled>Add Todo</button>
+              <button id="deleteProject" type="button" class="button button--danger" disabled>Delete Project</button>
+            </div>
+          </div>
 
+          <div class="todo__overview hidden">
+            <p class="todo__summary"></p>
+          </div>
 
+          <div id="content-placeholder" class="content__placeholder hidden">
+            <p>No projects available. Create a project to start managing todos.</p>
+          </div>
+
+          <div id="empty-todo-list" class="content__placeholder hidden">
+            <p>This project has no todos yet. Add a todo to get started.</p>
+          </div>
+
+          <ul id="todo-list" class="todo__list"></ul>
+        </section>
+      </main>
+
+      <dialog id="newProjectDialog" class="dialog">
+        <form method="dialog" class="dialog__form">
+          <div class="dialog__header">
+            <h3>New Project</h3>
+            <button type="button" class="dialog__close" onclick="document.getElementById('newProjectDialog').close()">×</button>
+          </div>
+
+          <label class="dialog__field">
+            Project name
+            <input type="text" id="project-name" placeholder="Project name" required />
+          </label>
+
+          <div class="dialog__actions">
+            <button type="submit" class="button button--primary">Create</button>
+            <button type="button" class="button button--secondary" onclick="document.getElementById('newProjectDialog').close()">Cancel</button>
+          </div>
+        </form>
+      </dialog>
+
+      <dialog id="newTodoDialog" class="dialog">
+        <form method="dialog" class="dialog__form">
+          <div class="dialog__header">
+            <h3>New Todo</h3>
+            <button type="button" class="dialog__close" onclick="document.getElementById('newTodoDialog').close()">×</button>
+          </div>
+
+          <label class="dialog__field">
+            Title
+            <input type="text" id="todo-title" placeholder="Task title" required />
+          </label>
+
+          <label class="dialog__field">
+            Description
+            <textarea id="todo-description" rows="4" placeholder="Task details"></textarea>
+          </label>
+
+          <div class="dialog__row">
+            <label class="dialog__field">
+              Due date
+              <input type="date" id="todo-dueDate" />
+            </label>
+            <label class="dialog__field">
+              Priority
+              <select id="todo-priority">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="dialog__actions">
+            <button type="submit" class="button button--primary">Save</button>
+            <button type="button" class="button button--secondary" onclick="document.getElementById('newTodoDialog').close()">Cancel</button>
+          </div>
+        </form>
+      </dialog>
+
+      <template id="card-template">
+        <li class="todo-card">
+          <div class="todo-card__top">
+            <div>
+              <span class="todo-card__badge"></span>
+              <h3 class="todo-card__title"></h3>
+              <p class="todo-card__description"></p>
+            </div>
+            <div class="todo-card__meta">
+              <p class="todo-card__due-date"></p>
+              <p class="todo-card__created"></p>
+            </div>
+          </div>
+          <div class="todo-card__actions">
+            <label class="todo-card__checkbox">
+              <input type="checkbox" name="completed" /> Completed
+            </label>
+            <button type="button" class="button button--tertiary todo-card__delete-button">Delete</button>
+          </div>
+        </li>
+      </template>
+    </div>
+  </body>
 </html>
